@@ -12,14 +12,11 @@ var controller = (function(){
 			if (loginController.length !== 0) {
 				if(loginController.password === request.body.password) {
 					var token = jwt.sign(loginController.toJSON(), 'jwtsecret', {
-						algorithm: 'HS256'
+						algorithm: 'HS256',
+						expiresIn : '720m'
 					});
 				}
-				response.json({
-					token: token,
-					code: "200",
-					message: "Login Success"
-				})
+				response.status(200).send({token: token, message: "Login Success"})
 			} else {
 				response.status(204).send({message: "Data Empty"})
 			}
